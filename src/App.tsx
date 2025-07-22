@@ -172,28 +172,60 @@ function App() {
         }
 
         if (x === maze.start.x && y === maze.start.y) {
-          ctx.fillStyle = '#4CAF50'
+          // グラデーション背景
+          const gradient = ctx.createLinearGradient(cellX, cellY, cellX + cellSize, cellY + cellSize)
+          gradient.addColorStop(0, '#ff6b6b')
+          gradient.addColorStop(1, '#ee5a52')
+          ctx.fillStyle = gradient
           ctx.fillRect(cellX + 8, cellY + 8, cellSize - 16, cellSize - 16)
+          
+          // 白い縁取り
+          ctx.strokeStyle = '#fff'
+          ctx.lineWidth = 2
+          ctx.strokeRect(cellX + 8, cellY + 8, cellSize - 16, cellSize - 16)
+          
           ctx.fillStyle = '#fff'
-          ctx.font = '18px Arial'
+          ctx.font = 'bold 18px Comic Neue, cursive'
           ctx.textAlign = 'center'
-          ctx.fillText('S', cellX + cellSize / 2, cellY + cellSize / 2 + 6)
+          ctx.fillText('🚀', cellX + cellSize / 2, cellY + cellSize / 2 + 6)
         }
 
         if (x === maze.goal.x && y === maze.goal.y) {
-          ctx.fillStyle = '#f44336'
+          // グラデーション背景
+          const gradient = ctx.createLinearGradient(cellX, cellY, cellX + cellSize, cellY + cellSize)
+          gradient.addColorStop(0, '#feca57')
+          gradient.addColorStop(1, '#ff9ff3')
+          ctx.fillStyle = gradient
           ctx.fillRect(cellX + 8, cellY + 8, cellSize - 16, cellSize - 16)
+          
+          // 白い縁取り
+          ctx.strokeStyle = '#fff'
+          ctx.lineWidth = 2
+          ctx.strokeRect(cellX + 8, cellY + 8, cellSize - 16, cellSize - 16)
+          
           ctx.fillStyle = '#fff'
-          ctx.font = '18px Arial'
+          ctx.font = 'bold 18px Comic Neue, cursive'
           ctx.textAlign = 'center'
-          ctx.fillText('G', cellX + cellSize / 2, cellY + cellSize / 2 + 6)
+          ctx.fillText('🏆', cellX + cellSize / 2, cellY + cellSize / 2 + 6)
         }
 
         if (mode === 'play' && x === playerPos.x && y === playerPos.y) {
-          ctx.fillStyle = '#2196F3'
+          // グラデーションプレイヤー
+          const gradient = ctx.createRadialGradient(
+            cellX + cellSize / 2, cellY + cellSize / 2, 0,
+            cellX + cellSize / 2, cellY + cellSize / 2, 12
+          )
+          gradient.addColorStop(0, '#74b9ff')
+          gradient.addColorStop(1, '#0984e3')
+          ctx.fillStyle = gradient
           ctx.beginPath()
           ctx.arc(cellX + cellSize / 2, cellY + cellSize / 2, 12, 0, 2 * Math.PI)
           ctx.fill()
+          
+          // 白い縁取り
+          ctx.strokeStyle = '#fff'
+          ctx.lineWidth = 2
+          ctx.stroke()
         }
       }
     }
@@ -441,63 +473,77 @@ function App() {
   }
 
   return (
-    <div style={{ padding: '20px', fontFamily: 'Arial, sans-serif' }}>
-      <h1>迷路共有アプリ</h1>
+    <div className="maze-container">
+      <h1 className="title">🎯 MazeShare 🎯</h1>
       
-      <div style={{ marginBottom: '20px' }}>
-        <button onClick={() => {
-          if (mode === 'edit') {
-            setMode('play')
-            setPlayerPos({ x: maze.start.x, y: maze.start.y })
-            setStats({ steps: 0, startTime: null, endTime: null })
-            setIsCompleted(false)
-          } else {
-            setMode('edit')
-            setIsCompleted(false)
-          }
-        }}>
-          {mode === 'edit' ? 'プレイモードに切り替え' : '編集モードに切り替え'}
+      <div className="button-group">
+        <button 
+          className="fun-button primary"
+          onClick={() => {
+            if (mode === 'edit') {
+              setMode('play')
+              setPlayerPos({ x: maze.start.x, y: maze.start.y })
+              setStats({ steps: 0, startTime: null, endTime: null })
+              setIsCompleted(false)
+            } else {
+              setMode('edit')
+              setIsCompleted(false)
+            }
+          }}
+        >
+          {mode === 'edit' ? '🎮 プレイする！' : '✏️ 編集する！'}
         </button>
+        
         {mode === 'edit' && (
           <>
-            <button onClick={() => saveMaze(true)} style={{ marginLeft: '10px' }}>
-              クリップボードに保存
+            <button className="fun-button secondary" onClick={() => saveMaze(true)}>
+              📋 クリップボードに保存
             </button>
-            <button onClick={() => saveMaze(false)} style={{ marginLeft: '10px' }}>
-              ファイルとして保存
+            <button className="fun-button success" onClick={() => saveMaze(false)}>
+              💾 ファイル保存
             </button>
-            <button onClick={loadMaze} style={{ marginLeft: '10px' }}>
-              クリップボードから読み込み
+            <button className="fun-button warning" onClick={loadMaze}>
+              📥 読み込み
             </button>
           </>
         )}
       </div>
 
       {mode === 'play' && (
-        <div style={{ marginBottom: '20px' }}>
-          <p>ステップ数: {stats.steps}</p>
-          <p>経過時間: {getElapsedTime()}秒</p>
-          {isCompleted && <p style={{ color: 'green', fontWeight: 'bold' }}>ゴール達成！</p>}
-          {!isCompleted && <p>矢印キーで移動してください</p>}
+        <div className="stats-container">
+          <div className="stats-item">🚶‍♂️ ステップ: {stats.steps}</div>
+          <div className="stats-item">⏱️ 時間: {getElapsedTime()}秒</div>
+          {isCompleted && (
+            <div className="completion-message">
+              🎉 おめでとう！ゴール達成！ 🎉
+            </div>
+          )}
+          {!isCompleted && (
+            <div style={{ marginTop: '10px', fontSize: '16px' }}>
+              🔄 矢印キーで移動してください
+            </div>
+          )}
         </div>
       )}
 
       {mode === 'edit' && (
-        <div style={{ marginBottom: '20px', fontSize: '14px' }}>
-          <p>左クリックドラッグ: 壁を削除 | 右クリックドラッグ: 壁を追加</p>
-          <p>スタート地点(S)とゴール地点(G)はドラッグで移動できます</p>
+        <div className="instructions">
+          <p>🖱️ 左クリックドラッグ: 壁を削除</p>
+          <p>🖱️ 右クリックドラッグ: 壁を追加</p>
+          <p>🚀 スタート地点とゴール地点🏆はドラッグで移動できます</p>
         </div>
       )}
 
-      <canvas
-        ref={canvasRef}
-        style={{ border: '1px solid #ccc', display: 'block' }}
-        onMouseDown={handleCanvasMouseDown}
-        onMouseMove={handleCanvasMouseMove}
-        onMouseUp={handleCanvasMouseUp}
-        onMouseLeave={handleCanvasMouseLeave}
-        onContextMenu={handleCanvasContextMenu}
-      />
+      <div className="maze-canvas">
+        <canvas
+          ref={canvasRef}
+          onMouseDown={handleCanvasMouseDown}
+          onMouseMove={handleCanvasMouseMove}
+          onMouseUp={handleCanvasMouseUp}
+          onMouseLeave={handleCanvasMouseLeave}
+          onContextMenu={handleCanvasContextMenu}
+        />
+      </div>
     </div>
   )
 }
