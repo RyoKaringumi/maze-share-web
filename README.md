@@ -1,69 +1,143 @@
-# React + TypeScript + Vite
+# 🎯 MazeShare
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**楽しく美しい迷路作成・共有アプリ**
 
-Currently, two official plugins are available:
+MazeShareは、直感的なドラッグ操作で迷路を作成し、圧縮データで他のユーザーと簡単に共有できるWebアプリケーションです。
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+![MazeShare Preview](https://via.placeholder.com/600x400/667eea/ffffff?text=MazeShare+%F0%9F%8E%AF)
 
-## Expanding the ESLint configuration
+## ✨ 主な機能
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### 🎨 **迷路エディター**
+- **マウスドラッグ操作**: 左クリックで壁を削除、右クリックで壁を追加
+- **視覚的な編集**: リアルタイムで迷路の変更を確認
+- **スタート・ゴール設定**: ドラッグで自由に配置可能
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+### 🎮 **プレイ機能**
+- **矢印キー操作**: スムーズなキャラクター移動
+- **統計情報**: ステップ数と経過時間をリアルタイム表示
+- **ゴール達成**: 美しいアニメーション付き完了メッセージ
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+### 🔗 **共有システム**
+- **圧縮データ**: Base64エンコードで効率的な迷路データ共有
+- **クリップボード**: ワンクリックでデータをコピー
+- **ファイル保存**: テキストファイルとしてダウンロード可能
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### 🌈 **美しいデザイン**
+- **カラフルUI**: グラデーションと楽しい色使い
+- **アニメーション**: ホバーエフェクトやバウンスアニメーション
+- **絵文字**: 🚀スタート地点、🏆ゴール地点などの視覚的な要素
+- **レスポンシブ**: モバイルデバイスでも快適に利用可能
+
+## 🚀 クイックスタート
+
+### 開発環境でのセットアップ
+
+```bash
+# リポジトリをクローン
+git clone https://github.com/RyoKaringumi/maze-share-web.git
+cd maze-share-web
+
+# 依存関係をインストール
+npm install
+
+# 開発サーバーを起動
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+ブラウザで http://localhost:5173 にアクセスして、MazeShareをお楽しみください！
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+### ビルド
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+# プロダクション用ビルド
+npm run build
+
+# ビルドをプレビュー
+npm run preview
 ```
+
+## 🎯 使い方
+
+### 迷路を作成する
+1. **編集モード**で迷路をカスタマイズ
+2. **左クリックドラッグ**で壁を削除
+3. **右クリックドラッグ**で壁を追加
+4. **スタート地点🚀**と**ゴール地点🏆**をドラッグで移動
+
+### 迷路をプレイする
+1. **プレイモード**に切り替え
+2. **矢印キー**でキャラクターを移動
+3. **ステップ数**と**経過時間**を確認しながらゴールを目指す
+
+### 迷路を共有する
+1. **クリップボードに保存**でデータをコピー
+2. **友達と共有**して一緒に楽しむ
+3. **読み込み**機能で他の人の迷路をプレイ
+
+## 🛠️ 技術スタック
+
+- **Frontend**: React 19 + TypeScript
+- **ビルドツール**: Vite
+- **デプロイ**: Cloudflare Pages
+- **スタイリング**: CSS (カスタムアニメーション付き)
+- **フォント**: Google Fonts (Fredoka One, Comic Neue)
+
+## 📋 開発コマンド
+
+```bash
+# 開発サーバー起動
+npm run dev
+
+# 型チェック付きビルド
+npm run build
+
+# ESLintでコードチェック
+npm run lint
+
+# プレビューサーバー起動
+npm run preview
+
+# Cloudflareにデプロイ
+npm run deploy
+```
+
+## 🎨 デザイン仕様
+
+### カラーパレット
+- **プライマリ**: `#ff6b6b` → `#ee5a52` (レッドグラデーション)
+- **セカンダリ**: `#4ecdc4` → `#44a08d` (ティールグラデーション)
+- **アクセント**: `#74b9ff` → `#0984e3` (ブルーグラデーション)
+- **背景**: `#667eea` → `#764ba2` (パープルグラデーション)
+
+### アニメーション
+- **レインボーエフェクト**: タイトルとボーダーの色が変化
+- **ホバーエフェクト**: ボタンが浮き上がる
+- **バウンス**: ゴール達成時のお祝いアニメーション
+
+## 🤝 コントリビューション
+
+プルリクエストや Issue の作成を歓迎します！
+
+1. リポジトリをフォーク
+2. フィーチャーブランチを作成 (`git checkout -b feature/amazing-feature`)
+3. 変更をコミット (`git commit -m 'Add amazing feature'`)
+4. ブランチにプッシュ (`git push origin feature/amazing-feature`)
+5. プルリクエストを作成
+
+## 📄 ライセンス
+
+このプロジェクトはMITライセンスの下で公開されています。
+
+## 🎉 謝辞
+
+- **Vite**: 高速な開発環境を提供
+- **React**: パワフルなUIライブラリ
+- **Cloudflare Pages**: 信頼性の高いホスティング
+- **Google Fonts**: 美しいフォント
+
+---
+
+**🎯 MazeShare で楽しい迷路体験を！**
+
+[🚀 今すぐ試してみる](https://your-deployment-url.pages.dev) | [🐛 バグ報告](https://github.com/RyoKaringumi/maze-share-web/issues) | [💡 機能リクエスト](https://github.com/RyoKaringumi/maze-share-web/issues)
