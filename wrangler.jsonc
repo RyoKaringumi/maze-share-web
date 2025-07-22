@@ -4,7 +4,7 @@
  */
 {
 	"$schema": "node_modules/wrangler/config-schema.json",
-	"name": "maze-share-web",
+	"name": "maze-share-ryokaringumi",
 	"main": "worker/index.ts",
 	"compatibility_date": "2025-07-22",
 	"assets": {
